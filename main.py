@@ -1,36 +1,24 @@
-from data import Wrangler
 from engine import Experiment
-import pickle
+import json
 
 
-PATH = '/data'
-
-
-def main(path):
-    data = Wrangler(path)
-    to_disk('mappings', {'users': (data.user_from_int, data.user_to_int),
-                         'items': (data.item_from_int, data.item_to_int)})
+def main():
     config = {
-        'user_pool': len(data.user_pool),
-        'item_pool': len(data.item_pool),
-        'latent_dim': 64,
-        'train_dataset': data.train_dataset,
-        'test_dataset': data.test_dataset,
-        'test_dataframe': data.test_dataframe,
-        'lr': 1.65e-3,
-        'wd': 1e-7,
+        'user_pool': 96249,
+        'item_pool': 25874,
+        'latent_dim': 32,
+        'lr': 3e-4,
+        'wd': 1e-4,
         'bs': 256,
-        'epochs': 100,
+        'epochs': 50,
         'cuda': True,
-        'comment': '_beta_latent-64'
+        'es': False,
+        'comment': '_lmf_50_4negs'
     }
+    json.dump(config, open('data/config.json', 'w'))
     engine = Experiment(config)
     engine.fit
 
 
-def to_disk(path, obj):
-    pickle.dump(obj, open(path, 'wb'))
-
-
 if __name__ == "__main__":
-    main(PATH)
+    main()
