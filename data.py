@@ -9,10 +9,10 @@ import pickle
 
 
 seed(0)
-PATH = '/devspace/imo-api4/data/timis'
+PATH = 'data/'
 
 
-class ImoData:
+class DataPrep:
     def __init__(self, path, save=True):
         self.sample_data = self.wrangling(path)
         # get the user pool & item pool
@@ -138,4 +138,4 @@ class uiDataset(Dataset):
 
 
 if __name__ == "__main__":
-    imodata = ImoData(PATH)
+    data = DataPrep(PATH)
